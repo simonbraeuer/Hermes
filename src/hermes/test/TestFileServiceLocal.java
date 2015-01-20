@@ -1,11 +1,12 @@
 package hermes.test;
 
-import static org.junit.Assert.*;
-import hermes.services.FileServiceLocal;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import hermes.services.FileServiceLocal;
 
 public class TestFileServiceLocal {
 	FileServiceLocal local;
