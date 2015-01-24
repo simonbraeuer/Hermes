@@ -4,7 +4,7 @@ import at.gov.parlament.documentation.hermes.exceptions.HermesExceptionCode;
 
 public enum ServiceExceptionCode implements HermesExceptionCode {
 	
-	RECORD_CONFIG_NULL(201);
+	RECORD_CONFIG_NULL(201), RECORD_CUTVIDEO_EXCEPTION(202), RECORD_CONFIG_CLASS_UNKNOWN(203);
 
 	private final int number;
 

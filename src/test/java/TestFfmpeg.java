@@ -2,21 +2,28 @@
 
 import java.io.IOException;
 
+import at.gov.parlament.documentation.hermes.domain.CutVideoRecordConfig;
+import at.gov.parlament.documentation.hermes.services.RecordServiceImpl;
+import at.gov.parlament.documentation.hermes.services.ServiceException;
+
 public class TestFfmpeg {
-	private static String FFMPEG_EXE = "/Users/sbr/Hermes/decoder/ffmpeg";
+	private static String FFMPEG_EXE = "/Users/sbr/bachelordata/bin/decoder/ffmpeg";
 	
-	private static String VID_IN ="/Users/sbr/Hermes/content/testvideo.mpg";
-	private static String VID_OUT = "/Users/sbr/Hermes/content/outvideo.mpeg";
-	private static String STARTTIME ="01:02:45";
-	private static String DURATION ="00:23:00";
+	private static String MPG_IN ="/Users/sbr/git/hermes/src/test/resources/video/testvideo.mpg";
+	private static String MPG_OUT = "/Users/sbr/bachelordata/video/killertomato.mpg";
+	private static String MP4_OUT = "/Users/sbr/bachelordata/video/out/out.mp4";
+	private static String MP4_IN = "/Users/sbr/bachelordata/video/test.mp4";
+	private static String STARTTIME ="00:00:05";
+	private static String ENDTIME ="00:00:10";
 	
 	public static void main(String[] args) {
-		 try {
-			cutVideo(VID_IN, VID_OUT, STARTTIME, DURATION);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		RecordServiceImpl service = new RecordServiceImpl();
+		//CutVideoRecordConfig config = new CutVideoRecordConfig(MPG_IN, MPG_OUT, STARTTIME, ENDTIME);
+		CutVideoRecordConfig config = new CutVideoRecordConfig(MPG_IN, MP4_OUT, STARTTIME, ENDTIME);
+		
+		try {
+			service.record(config);
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -26,6 +33,8 @@ public class TestFfmpeg {
 	
 	public static int cutVideo (String inVideo, String outVideo, String fromTime, String durationTime) throws IOException, InterruptedException {
 		String command = FFMPEG_EXE+" -ss " + fromTime + " -i " + inVideo + " -t " + durationTime + " -c copy " + outVideo;
+		
+		System.out.println(command);
 		
 		Process process = Runtime.getRuntime().exec(command);
 		process.waitFor();

@@ -3,6 +3,7 @@ package at.gov.parlament.documentation.hermes.services;
 import at.gov.parlament.documentation.hermes.exceptions.HermesException;
 import at.gov.parlament.documentation.hermes.exceptions.HermesExceptionCode;
 
+
 public class ServiceException extends HermesException {
 
 	/**
