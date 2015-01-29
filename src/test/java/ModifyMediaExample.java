@@ -20,7 +20,6 @@ import com.xuggle.mediatool.event.IAudioSamplesEvent;
 import com.xuggle.mediatool.event.IVideoPictureEvent;
 
 
-
 public class ModifyMediaExample {
 	private static final String inputFilename = "/Users/sbr/bachelordata/video/generated.mp4";
 	private static final String outputFilename = "/Users/sbr/bachelordata/video/out/killertomato_modified.flv";
