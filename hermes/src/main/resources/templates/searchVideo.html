@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hermes</title>
+<link rel="stylesheet" href="/css/hermes.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<img src="files/parlament.png" alt="Logo des Parlaments" />
+	<div id="hermes" class="mainPanel">
+		<form method="POST" action="/searchVideo">
+			Video: <input type="text" name="searchVideoFileName" /><br /> <input
+				type="submit" value="Submit" />
+		</form>
+		Ergebnisse:
+		<ul id="searchResults" th:each="result,iterationStatus : ${resultList}">
+			<li><a th:href="'/presentVideo?videoFile=' + ${result.fileName}"><p
+						th:text="${result.fileName}" /></a></li>
+		</ul>
+	</div>
+</body>
+</html>

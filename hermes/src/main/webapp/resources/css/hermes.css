@@ -1,0 +1,11 @@
+.leftPanel {
+    float: left;
+    
+}
+.rightPanel {
+    float: right;
+}
+
+.mainPanel {
+	background-color: #b0c4de;
+}
