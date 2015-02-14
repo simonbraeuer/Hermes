@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+		   
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+    <context:property-placeholder location="classpath:hermes.properties"/>
+    
+<!-- Views -->
+	<bean id="errorView" class="at.gov.parlament.documentation.hermes.gui.ErrorView">
+	</bean>
+	
+	<bean id="loginView" class="at.gov.parlament.documentation.hermes.gui.LoginView">
+	</bean>
+	
+	<bean id="mainLoginView" class="at.gov.parlament.documentation.hermes.gui.MainLoginView">
+	</bean>
+	
+	<bean id="mainTabView" class="at.gov.parlament.documentation.hermes.gui.MainTabView">
+	</bean>
+	
+	<bean id="mainView" class="at.gov.parlament.documentation.hermes.gui.MainView">
+	</bean> 
+	
+	<bean id="registerView" class="at.gov.parlament.documentation.hermes.gui.RegisterView">
+	</bean>
+	
+<!-- Controllers -->
+	
+	<bean id="appController" class="at.gov.parlament.documentation.hermes.controller.AppController">
+		<property name="mainView" ref="mainView"/>
+		<property name="errorView" ref="errorView"/>
+		<property name="beanService" ref="beanService"/>
+	</bean>
+	
+	<bean id="loginController" class="at.gov.parlament.documentation.hermes.controller.LoginController">
+		<property name="beanService" ref="beanService"/>
+		<property name="mainLoginView" ref="mainLoginView"/>		
+		<property name="loginService" ref="loginService"/>
+		<property name="loginView" ref="loginView"/>
+		<property name="userService" ref="userService"/>
+		<property name="registerView" ref="registerView"/>
+		<property name="errorView" ref="errorView"/>
+	</bean>
+	
+	<bean id="mainTabViewController" class="at.gov.parlament.documentation.hermes.controller.MainTabViewController">
+		<property name="mainTabView" ref="mainTabView"/>
+	</bean>
+	
+<!-- Services -->
+	
+	<bean id="beanService" class="at.gov.parlament.documentation.hermes.service.BeanService">     
+	</bean>
+	
+	<bean id="loginService" class="at.gov.parlament.documentation.hermes.service.LoginService">
+		<property name="userDao" ref="userDao"/>
+		<property name="hashingService" ref="hashingService" />
+	</bean>
+    
+	<bean id="hashingService" class="at.gov.parlament.documentation.hermes.service.HashingService">
+	</bean>
+	
+	<bean id="printUtilityService" class="at.gov.parlament.documentation.hermes.service.PrintUtilityService">
+	</bean>
+	
+	<bean id="userService" class="at.gov.parlament.documentation.hermes.service.UserService">
+		<property name="userDao" ref="userDao"/>
+		<property name="hashingService" ref="hashingService" />
+	</bean>
+	
+<!-- DAOs -->
+	<bean id="userDao" class="at.gov.parlament.documentation.hermes.dao.JDBCUserDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+<!-- Other Beans -->	
+	<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.classdriver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+</beans>

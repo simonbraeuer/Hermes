@@ -3,47 +3,23 @@ package at.gov.parlament.documentation.hermes.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Map;
 
-import javax.persistence.Query;
-import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import org.springframework.stereotype.Component;
 
-import at.gov.parlament.documentation.hermes.dao.entities.IEntity;
-import at.gov.parlament.documentation.hermes.dao.interfaces.GenericDao;
-
-public abstract class GenericDaoImpl<T extends IEntity> implements GenericDao<T> {
-
-    @PersistenceContext
+@Component
+public abstract class GenericDaoImpl<T extends IEntity> implements IGenericDao<T> {
     protected EntityManager em;
-
+    
     private Class<T> type;
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "unchecked" })
 	public GenericDaoImpl() {
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;
-        type = (Class) pt.getActualTypeArguments()[0];
+        type = (Class<T>) pt.getActualTypeArguments()[0];
     }
 
-    @Override
-    public long countAll(final Map<String, Object> params) {
-
-        final StringBuffer queryString = new StringBuffer(
-                "SELECT count(o) from ");
-
-        queryString.append(type.getSimpleName()).append(" o ");
-        //queryString.append(em.getCriteriaBuilder().createQuery(params)
-        //queryString.append(this.get ()
-
-        final Query query = this.em.createQuery(queryString.toString());
-
-        return (Long) query.getSingleResult();
-
-    }
-
-   // protected abstract Object getQueryClauses(Map<String, Object> params, Object object);
-    
 	@Override
     public T create(final T t) {
         this.em.persist(t);

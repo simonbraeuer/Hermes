@@ -1,31 +1,25 @@
-package at.gov.parlament.documentation.hermes.services;
+package at.gov.parlament.documentation.hermes.service;
 
 import java.io.IOException;
 
-import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.slf4j.Slf4j;
-import at.gov.parlament.documentation.hermes.dao.entities.CategoryEntity;
-import at.gov.parlament.documentation.hermes.dao.interfaces.CategoryDao;
+import at.gov.parlament.documentation.hermes.dao.CategoryEntity;
+import at.gov.parlament.documentation.hermes.dao.ICategoryDao;
 import at.gov.parlament.documentation.hermes.domain.CutVideoRecordConfig;
 import at.gov.parlament.documentation.hermes.domain.IRecordConfig;
-import at.gov.parlament.documentation.hermes.services.RecordService;
+import at.gov.parlament.documentation.hermes.exceptions.RecordServiceException;
+import at.gov.parlament.documentation.hermes.exceptions.RecordServiceExceptionCode;
+import at.gov.parlament.documentation.hermes.service.IRecordService;
 
-@Service("userService")
 @Slf4j
-public class RecordServiceImpl implements RecordService {
+public class RecordService implements IRecordService {
 	private static final String FFMPEG_BINARY = "/Users/sbr/bachelordata/bin/ffmpeg";
 	
-	@Autowired
-	private CategoryDao categoryDao;
-	
-	
-	public void record(IRecordConfig config) throws ServiceException {
+	public void record(IRecordConfig config) throws RecordServiceException {
 		log.debug("record: {}", config);
 		if ( config == null ) {
-			throw new ServiceException(ServiceExceptionCode.RECORD_CONFIG_NULL);
+			throw new RecordServiceException(RecordServiceExceptionCode.RECORD_CONFIG_NULL);
 		}
 		
 		if ( config instanceof CutVideoRecordConfig ) {
@@ -33,24 +27,24 @@ public class RecordServiceImpl implements RecordService {
 		}
 		else
 		{
-			throw new ServiceException(ServiceExceptionCode.RECORD_CONFIG_CLASS_UNKNOWN);
+			throw new RecordServiceException(RecordServiceExceptionCode.RECORD_CONFIG_CLASS_UNKNOWN);
 		}
 	}
 	
-	private void recordCutVideo (CutVideoRecordConfig config) throws ServiceException {
+	private void recordCutVideo (CutVideoRecordConfig config) throws RecordServiceException {
 		log.debug("recordCutVideo(): {}", config);
 		
 		String command = FFMPEG_BINARY+" -ss " + config.getStartTime() + " -i " + config.getInVideo() + " -t " + config.getEndTime() + " -c copy " + config.getOutVideo();
-		CategoryEntity entity = new CategoryEntity("test", "Bruno");
-		categoryDao.create(entity);
+		//CategoryEntity entity = new CategoryEntity();
+		//iCategoryDao.create(entity);
 		try {
 			if (executeCommand (command) != 0) {
-				throw new ServiceException(ServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
+				throw new RecordServiceException(RecordServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
 			}
 		} catch (IOException e) {
-			throw new ServiceException(ServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
+			throw new RecordServiceException(RecordServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
 		} catch (InterruptedException e) {
-			throw new ServiceException(ServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
+			throw new RecordServiceException(RecordServiceExceptionCode.RECORD_CUTVIDEO_EXCEPTION);
 		}
 	}
 	

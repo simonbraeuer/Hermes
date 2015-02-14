@@ -1,20 +1,9 @@
-package at.gov.parlament.documentation.hermes.dao.interfaces;
+package at.gov.parlament.documentation.hermes.dao;
 
 import java.util.Map;
 
-import at.gov.parlament.documentation.hermes.dao.entities.IEntity;
-
-public interface GenericDao<T extends IEntity> {
-    /**
-     * Method that returns the number of entries from a table that meet some
-     * criteria (where clause params)
-     *
-     * @param params
-     *            sql parameters
-     * @return the number of records meeting the criteria
-     */
-    long countAll(Map<String, Object> params);
-
+public interface IGenericDao<T extends IEntity> {
+    
     /**
      * Create given entity
      * @param entity

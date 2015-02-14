@@ -3,8 +3,9 @@
 import java.io.IOException;
 
 import at.gov.parlament.documentation.hermes.domain.CutVideoRecordConfig;
-import at.gov.parlament.documentation.hermes.services.RecordServiceImpl;
-import at.gov.parlament.documentation.hermes.services.ServiceException;
+import at.gov.parlament.documentation.hermes.exceptions.HashingServiceException;
+import at.gov.parlament.documentation.hermes.exceptions.RecordServiceException;
+import at.gov.parlament.documentation.hermes.service.RecordService;
 
 public class TestFfmpeg {
 	private static String FFMPEG_EXE = "/Users/sbr/bachelordata/bin/decoder/ffmpeg";
@@ -17,14 +18,13 @@ public class TestFfmpeg {
 	private static String ENDTIME ="00:00:10";
 	
 	public static void main(String[] args) {
-		RecordServiceImpl service = new RecordServiceImpl();
+		RecordService service = new RecordService();
 		//CutVideoRecordConfig config = new CutVideoRecordConfig(MPG_IN, MPG_OUT, STARTTIME, ENDTIME);
 		CutVideoRecordConfig config = new CutVideoRecordConfig(MPG_IN, MP4_OUT, STARTTIME, ENDTIME);
 		
 		try {
 			service.record(config);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
+		} catch (RecordServiceException e) {
 			e.printStackTrace();
 		}
 		
