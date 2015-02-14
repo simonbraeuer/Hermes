@@ -1,19 +1,71 @@
 package at.gov.parlament.documentation.hermes.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.gov.parlament.documentation.hermes.domain.Video;
+
 public final class SearchVideoModel {
-	private String fileName;
+	private String fileNameStartsWith;
+	private List<SearchVideoResultModel> results;
 	
-	public String getFileName() {
-		return fileName;
+	private SearchVideoModel() {
+		super();
+		fileNameStartsWith ="";
+		results = new ArrayList<SearchVideoResultModel>();
 	}
 	
-	private SearchVideoModel (String fileName) {
-		this.fileName = fileName;
+	public static SearchVideoModel createBySearchAndVideoList(String fileNameStartsWith, List<Video> videos) {
+		SearchVideoModel ret = new SearchVideoModel();
+		ret.fileNameStartsWith = fileNameStartsWith;
+		for (Video video: videos) {
+			ret.addResultByVideo(video);
+		}
+		return ret;
 	}
 	
-	public static SearchVideoModel createSearchResult (String fileName) {
-		return new SearchVideoModel(fileName);
+	private void addResultByVideo(Video video) {
+		SearchVideoResultModel newResult = new SearchVideoResultModel();
+		newResult.setFileLink(video.getLink());
+		newResult.setFileName(video.getFileName());
+		results.add(newResult);
+	}
+	
+	public String getFileNameStartsWith() {
+		return fileNameStartsWith;
+	}
+
+	public void setFileNameStartsWith(String fileNameStartsWith) {
+		this.fileNameStartsWith = fileNameStartsWith;
+	}
+
+	public List<SearchVideoResultModel> getResults() {
+		return results;
+	}
+
+	public void setResults(List<SearchVideoResultModel> results) {
+		this.results = results;
+	}
+
+	
+	
+	public class SearchVideoResultModel {
+		private String fileName;
+		private String fileLink;
+		public String getFileName() {
+			return fileName;
+		}
+		public void setFileName(String fileName) {
+			this.fileName = fileName;
+		}
+		public String getFileLink() {
+			return fileLink;
+		}
+		public void setFileLink(String fileLink) {
+			this.fileLink = fileLink;
+		}
+		
+		
+		
 	}
 }

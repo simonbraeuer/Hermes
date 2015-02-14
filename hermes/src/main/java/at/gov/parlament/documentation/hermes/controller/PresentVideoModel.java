@@ -21,6 +21,7 @@ public final class PresentVideoModel {
 			PresentVideoPositionMarkerModel newPm = ret.new PresentVideoPositionMarkerModel();
 			newPm.setName(pm.getName());
 			newPm.setTimeOffset(pm.getOffsetSeconds());
+			ret.positionMarkers.add(newPm);
 		}
 		return ret;
 	}
