@@ -10,12 +10,17 @@
 	<div id="hermes" class="mainPanel">
 		<form method="POST" action="/searchVideo">
 			Video: <input type="text" name="fileNameStartsWith" /><br /> <input
-				type="submit" value="Submit" />
+				type="submit" value="Submit" /> <a href="/uploadVideo">Datei
+				hochladen</a> <a href="/recordVideo">Aufnahme</a>
 		</form>
 		Ergebnisse:
-		<ul id="searchResults" th:each="result,iterationStatus : ${searchVideoModel.results}">
+		<ul id="searchResults"
+			th:each="result,iterationStatus : ${searchVideoModel.results}">
 			<li><a th:href="'/presentVideo?videoFile=' + ${result.fileName}"><p
-						th:text="${result.fileName}" /></a></li>
+						th:text="${result.fileName}" /></a> <a
+				th:href="'/deleteVideo?videoFile=' + ${result.fileName}"><img
+					src="files/png/icon_trash_alt.png"
+					th:alt="'Lösche ' + ${result.fileName}" /></a></li>
 		</ul>
 	</div>
 </body>

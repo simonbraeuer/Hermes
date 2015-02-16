@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hermes</title>
+<link rel="stylesheet" href="/css/hermes.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div id="navigation">
+        <a href="/searchVideo">Hauptseite</a>
+	</div>
+	<form method="POST" enctype="multipart/form-data"
+		th:action="${RecordVideoModel.recordButtonAction}">
+		Name der Aufnahme:<input id="recordFileName" name="recordFileName"
+			type="text" /> <input id="recordButton" type="submit"
+			th:value="${RecordVideoModel.recordButtonLabel}" />
+	</form>
+</body>
+</html>

@@ -68,32 +68,4 @@ public class PresentVideoController {
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 	}
-
-	@RequestMapping(value = "/uploadVideo", method = RequestMethod.GET)
-	public String provideUploadInfo() {
-		return "upload";
-	}
-
-	@RequestMapping(value = "/uploadVideo", method = RequestMethod.POST)
-	public @ResponseBody String handleFileUpload(
-			@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file) {
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-				Video newVideo = new Video();
-				newVideo.setFileName(name);
-				newVideo.setPositionMarkers(new ArrayList<PositionMarker>());
-				videoService.addVideo(newVideo, bytes);
-				// TODO add functionality for positionmarkers
-				
-				return "You successfully uploaded " + name + "!";
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			return "You failed to upload " + name
-					+ " because the file was empty.";
-		}
-	}
 }
