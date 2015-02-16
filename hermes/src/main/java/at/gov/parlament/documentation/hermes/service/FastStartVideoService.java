@@ -6,18 +6,24 @@ import java.util.Properties;
 
 import org.crsh.console.jline.internal.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FastStartVideoService implements IFastStartVideoService {
 	
+	
 	@Autowired
-	private Properties applicationProperties = new Properties();
+	@Qualifier("hermesProperties")
+	private Properties applicationProperties;
 	
 	@Override
 	public boolean convert(File convertToFastStartVideo) {
+		return true;
+	}
+	
+	public boolean convertOld(File convertToFastStartVideo) {
 		Log.info("Start faststart conversion: " + convertToFastStartVideo);
-		
 		String command = applicationProperties.getProperty("fastStartVideoService.convertCommand", "/Users/sbr/bachelordata/bin/ffmpeg -i ${inputFile} -c:a copy -c:v copy -movflags faststart ${outputFile}");
 		if(command.isEmpty()) {
 			Log.error("Could not convert file!");

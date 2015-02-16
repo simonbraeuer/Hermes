@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Hermes</title>
-<link rel="stylesheet" href="/css/hermes.css" />
+<link rel="stylesheet" href="/resources/css/hermes.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<img src="files/parlament.png" alt="Logo des Parlaments" />
+	<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
 	<div id="navigation">
 		<a href="/searchVideo">Hauptseite</a>
 	</div>
@@ -20,9 +20,7 @@
 			</ul>
 		</div>
 		<div class="rightPanel">
-			<video id="sbrVideo" width="640" height="480" controls="controls">
-				<source id="source" th:src="${presentVideoModel.videoLink}"
-					type="video/mp4" />
+			<video id="sbrVideo" width="640" height="480" controls="controls" th:src="${presentVideoModel.videoLink}" type="video/mp4">
 				Your browser does not support the video tag
 			</video>
 		</div>

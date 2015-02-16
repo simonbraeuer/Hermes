@@ -8,13 +8,15 @@ import java.util.Properties;
 
 import org.crsh.console.jline.internal.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class RecordVideoServiceDummyImpl implements IRecordVideoService{
 	@Autowired
-	private Properties applicationProperties = new Properties();
+	@Qualifier("hermesProperties")
+	private Properties applicationProperties;
 	
 	@Autowired
 	private IFastStartVideoService fastStartService;

@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import org.crsh.console.jline.internal.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import at.gov.parlament.documentation.hermes.domain.PositionMarker;
@@ -22,20 +23,33 @@ import at.gov.parlament.documentation.hermes.domain.Video;
 @Slf4j
 @Service
 public class VideoServiceDummyImpl implements IVideoService {
-	private List<Video> allVideos = new ArrayList<Video>();
-	private String localPath = "/opt/files/";
+	private List<Video> allVideos;
+	private String localPath;
 	
 	@Autowired
 	private IFastStartVideoService fastStartService;
 	
 	@Autowired
-	private Properties applicationProperties = new Properties();
-
+	@Qualifier("hermesProperties")
+	private Properties applicationProperties;
+	
+	private String getLocalPath ( ) {
+		if (localPath == null) {
+			localPath = applicationProperties.getProperty("videoService.directory");
+		}
+		Log.info("localPath=" + localPath);
+		return localPath;
+	}
+	
+	private List<Video> getAllVideos () {
+		if (allVideos == null) {
+			allVideos = new ArrayList<Video>();
+		}
+		return allVideos;
+	}
+	
 	public VideoServiceDummyImpl() {
 		super();
-		
-		localPath = applicationProperties.getProperty("videoService.directory","/opt/files/");
-		refreshVideoList();
 	}
 
 	@Override
@@ -43,7 +57,7 @@ public class VideoServiceDummyImpl implements IVideoService {
 			String videoFileNameStartsWith) {
 		refreshVideoList();
 		ArrayList<Video> ret = new ArrayList<Video>();
-		for (Video existing : allVideos) {
+		for (Video existing : getAllVideos()) {
 			if (existing.getFileName().startsWith(videoFileNameStartsWith)) {
 				ret.add(existing);
 			}
@@ -80,11 +94,11 @@ public class VideoServiceDummyImpl implements IVideoService {
 		BufferedOutputStream stream;
 		try {
 			stream = new BufferedOutputStream(new FileOutputStream(new File(
-					localPath + video.getFileName())));
+					getLocalPath() + video.getFileName())));
 			stream.write(rawVideoFile);
 			stream.close();
-			fastStartService.convert(new File(localPath+video.getFileName()));
-			allVideos.add(video);
+			fastStartService.convert(new File(getLocalPath()+video.getFileName()));
+			getAllVideos().add(video);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +111,7 @@ public class VideoServiceDummyImpl implements IVideoService {
 
 	@Override
 	public Video getVideo(String videoFileName) {
-		for (Video video : allVideos) {
+		for (Video video : getAllVideos()) {
 			if (video.getFileName().equals(videoFileName)) {
 				return video;
 			}
@@ -106,9 +120,9 @@ public class VideoServiceDummyImpl implements IVideoService {
 	}
 
 	private void refreshVideoList() {
-		allVideos.clear();
+		getAllVideos().clear();
 		// initialize video list
-		for (File file : new File(localPath).listFiles(new FileFilter() {
+		for (File file : new File(getLocalPath()).listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
 				if (pathname.isFile() && pathname.getName().endsWith(".mp4")) {
@@ -120,7 +134,7 @@ public class VideoServiceDummyImpl implements IVideoService {
 			Video newVideo = new Video();
 			newVideo.setFileName(file.getName());
 			readPositionMarkers(newVideo);
-			allVideos.add(newVideo);
+			getAllVideos().add(newVideo);
 
 		}
 	}
@@ -128,8 +142,9 @@ public class VideoServiceDummyImpl implements IVideoService {
 	@Override
 	public void deleteVideo(Video video) {
 		Log.info("Delete video: " + video);
-		allVideos.remove(video);
-		File toDelete = new File(localPath+video.getFileName());
+		getAllVideos().remove(video);
+		File toDelete = new File(getLocalPath()+video.getFileName());
+		Log.info("Delete video file: " + toDelete.getAbsolutePath());
 		toDelete.delete();
 	}
 
