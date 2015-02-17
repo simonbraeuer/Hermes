@@ -1,4 +1,4 @@
-package at.gov.parlament.documentation.hermes.service;
+package at.gov.parlament.documentation.hermes.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PropertyConfiguration {
 	private String getJndiPropertyFilePath ( ) {
-    	return ("D:\\DEV\\privat\\git\\hermes\\hermes\\src\\main\\resources\\windowsApplication.properties");
+		//return ("D:\\DEV\\privat\\git\\hermes\\hermes\\src\\main\\resources\\windowsApplication.properties");
+		return ("/Users/sbr/git/HermesRepo/hermes/src/main/resources/macApplication.properties");
     }
     
     @Bean @Qualifier("hermesProperties")

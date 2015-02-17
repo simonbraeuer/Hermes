@@ -5,4 +5,5 @@ public interface IRecordVideoService {
 	boolean isRecording();
 	boolean startRecord(String outputFile);
 	boolean stopRecord();
+	String getCurrentFile();
 }

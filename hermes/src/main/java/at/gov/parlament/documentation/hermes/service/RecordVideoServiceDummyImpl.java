@@ -18,9 +18,6 @@ public class RecordVideoServiceDummyImpl implements IRecordVideoService{
 	@Qualifier("hermesProperties")
 	private Properties applicationProperties;
 	
-	@Autowired
-	private IFastStartVideoService fastStartService;
-	
 	private boolean isRecording;
 	private String currentFile;
 
@@ -50,7 +47,7 @@ public class RecordVideoServiceDummyImpl implements IRecordVideoService{
 			isRecording = false;
 			return false;
 		}
-		currentFile = outputDirectory+outputFile+".mp4";
+		currentFile = outputFile+".mp4";
 		return true;
 	}
 
@@ -69,17 +66,22 @@ public class RecordVideoServiceDummyImpl implements IRecordVideoService{
 			Log.error("Could not stop record!");
 			return false;
 		}
-		fastStartService.convert(new File(currentFile));
 		isRecording = false;
+		currentFile="";
 		return true;
 	}
 	
-	private int executeCommand (String command) throws IOException, InterruptedException {
+	private void executeCommand (String command) throws IOException, InterruptedException {
 		Log.info("excuteCommand: {}", command);
 		Process process = Runtime.getRuntime().exec(command);
-		process.waitFor();
-		Log.info("excuteCommand->result: {}", process.exitValue());
-		return process.exitValue();
+		//process.waitFor();
+		//Log.info("excuteCommand->result: {}", process.exitValue());
+		//return process.exitValue();
+	}
+
+	@Override
+	public String getCurrentFile() {
+		return ""+currentFile;
 	}
 	
 }

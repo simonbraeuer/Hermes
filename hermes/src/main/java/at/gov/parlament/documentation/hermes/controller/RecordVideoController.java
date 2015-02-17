@@ -19,10 +19,12 @@ public class RecordVideoController {
 	public String recordVideo(Model model) {
 		RecordVideoModel recordVideoModel = new RecordVideoModel();
 		if(recordVideoService.isRecording()) {
+			recordVideoModel.setCurrentVideo(recordVideoService.getCurrentFile());
 			recordVideoModel.setRecordButtonAction("/recordVideo/stop");
 			recordVideoModel.setRecordButtonLabel("Stoppe Aufnahme");
 		}
 		else {
+			recordVideoModel.setCurrentVideo("");
 			recordVideoModel.setRecordButtonAction("/recordVideo/start");
 			recordVideoModel.setRecordButtonLabel("Starte Aufnahme");
 		}

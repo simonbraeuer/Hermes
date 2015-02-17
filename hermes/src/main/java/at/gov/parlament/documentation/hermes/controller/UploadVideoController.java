@@ -2,8 +2,10 @@ package at.gov.parlament.documentation.hermes.controller;
 
 
 import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,14 +23,15 @@ public class UploadVideoController {
 	IVideoService videoService;
 
 	@RequestMapping(value = "/uploadVideo", method = RequestMethod.GET)
-	public String provideUploadInfo() {
+	public String provideUploadInfo(@RequestParam(value = "message", required = false, defaultValue = "") String message, Model model) {
+		model.addAttribute("message", message);
 		return "uploadVideo";
 	}
 
 	@RequestMapping(value = "/uploadVideo", method = RequestMethod.POST)
-	public @ResponseBody String handleFileUpload(
+	public  String handleFileUpload(
 			@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file) {
+			@RequestParam("file") MultipartFile file, Model model) {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -36,15 +39,13 @@ public class UploadVideoController {
 				newVideo.setFileName(name);
 				newVideo.setPositionMarkers(new ArrayList<PositionMarker>());
 				videoService.addVideo(newVideo, bytes);
-				// TODO add functionality for positionmarkers
-				
-				return "You successfully uploaded " + name + "!";
+				model.addAttribute("message", "Datei erfolgreich hochgeladen!");
 			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
+				model.addAttribute("message", "Fehler: " + e.getMessage());
 			}
 		} else {
-			return "You failed to upload " + name
-					+ " because the file was empty.";
+			model.addAttribute("message", "Sie müssen eine Datei wählen!");
 		}
+		return "uploadVideo";
 	}
 }

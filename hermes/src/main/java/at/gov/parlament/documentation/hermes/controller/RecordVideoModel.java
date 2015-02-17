@@ -3,6 +3,14 @@ package at.gov.parlament.documentation.hermes.controller;
 public final class RecordVideoModel {
 	private String recordButtonLabel;
 	private String recordButtonAction;
+	private String currentVideo;
+	
+	public String getCurrentVideo() {
+		return currentVideo;
+	}
+	public void setCurrentVideo(String currentVideo) {
+		this.currentVideo = currentVideo;
+	}
 	public String getRecordButtonLabel() {
 		return recordButtonLabel;
 	}

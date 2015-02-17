@@ -2,18 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Hermes</title>
-<link rel="stylesheet" href="/resources/css/hermes.css" />
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
-	<div id="navigation">
-        <a href="/searchVideo">Hauptseite</a>
-	</div>
+	<header>
+        <img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
+    </header>
+    <nav>
+        <ul class="nav nav-tabs">
+            <li role="presentation"><a href="/hermesMain">Home</a></li>
+            <li role="presentation"><a href="/searchVideo">Suchen</a></li>
+            <li role="presentation"><a href="/recordVideo">Aufnehmen</a></li>
+            <li role="presentation" class="active"><a href="/uploadVideo">Hochladen</a></li>
+        </ul>
+    </nav>
 	<form method="POST" enctype="multipart/form-data" action="/uploadVideo">
-		File to upload: <input type="file" name="file" /><br /> Name: <input
+		Datei zum Hochladen: <input type="file" name="file" /><br /> Dateiname am Server: <input
 			type="text" name="name" /><br /> <br /> <input type="submit"
-			value="Upload" /> Press here to upload the file!
+			value="Upload" /> Drücken Sie hier um die Datei hochzuladen!
 	</form>
+	<footer>
+	   <span th:text="${message}">Nachricht</span>
+	</footer>
 </body>
 </html>

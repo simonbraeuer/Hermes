@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
    
+	private String preOptPath = "";
+	//private String preOptPath = "//D:/DEV/privat";
+	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/css/**").addResourceLocations(getResourceCssLocation());
@@ -16,20 +19,20 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/resources/**").addResourceLocations(getResourceWarLocation());
 		registry.addResourceHandler("/files/**").addResourceLocations(getResourceFilesLocation());
     }
-    
+	
 	private String getResourceWarLocation () {
-    	return "file:///D:/DEV/privat/opt/files/";
+    	return "file:/" + preOptPath + "opt/files/";
     }
 	
 	private String getResourcePngLocation () {
-    	return "file:///D:/DEV/privat/opt/files/png/";
+		return "/resources/png/";
     }
 	
 	private String getResourceCssLocation () {
-    	return "file:///D:/DEV/privat/opt/files/css/";
+		return "file:/" + preOptPath + "opt/files/css/";
     }
 	
 	private String getResourceFilesLocation () {
-    	return "file:///D:/DEV/privat/opt/files/";
+		return "file:/" + preOptPath + "opt/files/";
     }
 }

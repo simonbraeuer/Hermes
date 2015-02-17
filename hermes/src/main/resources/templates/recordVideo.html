@@ -2,18 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Hermes</title>
-<link rel="stylesheet" href="/resources/css/hermes.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
-	<div id="navigation">
-        <a href="/searchVideo">Hauptseite</a>
-	</div>
+	<header>
+		<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
+	</header>
+	<nav>
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="/hermesMain">Home</a></li>
+			<li role="presentation"><a href="/searchVideo">Suchen</a></li>
+			<li role="presentation" class="active"><a href="/recordVideo">Aufnehmen</a></li>
+			<li role="presentation"><a href="/uploadVideo">Hochladen</a></li>
+		</ul>
+	</nav>
 	<form method="POST" enctype="multipart/form-data"
 		th:action="${RecordVideoModel.recordButtonAction}">
-		Name der Aufnahme:<input id="recordFileName" name="recordFileName"
-			type="text" /> <input id="recordButton" type="submit"
+		<div th:switch="${RecordVideoModel.currentVideo}">
+			<p th:case="null"> Name der Aufnahme (ohne .mp4):<input id="recordFileName"
+                name="recordFileName" type="text" /></p>
+            <p th:case="''"> Name der Aufnahme (ohne .mp4):<input id="recordFileName"
+                name="recordFileName" type="text" /></p>
+            <p th:case="*" th:text="'Wird gerade aufgenommen: ' + ${RecordVideoModel?.currentVideo}"/>
+		</div>
+		<input id="recordButton" type="submit"
 			th:value="${RecordVideoModel.recordButtonLabel}" />
 	</form>
 </body>

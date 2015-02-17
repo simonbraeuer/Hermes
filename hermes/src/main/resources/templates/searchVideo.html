@@ -2,26 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Hermes</title>
-<link rel="stylesheet" href="/resources/css/hermes.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
-	<div id="hermes" class="mainPanel">
+	<header>
+		<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
+	</header>
+	<nav>
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="/hermesMain">Home</a></li>
+			<li role="presentation" class="active"><a href="/searchVideo">Suchen</a></li>
+			<li role="presentation"><a href="/recordVideo">Aufnehmen</a></li>
+			<li role="presentation"><a href="/uploadVideo">Hochladen</a></li>
+		</ul>
+	</nav>
+	<div id="hermes">
 		<form method="POST" action="/searchVideo">
-			Video: <input type="text" name="fileNameStartsWith" /><br /> <input
-				type="submit" value="Submit" /> <a href="/uploadVideo">Datei
-				hochladen</a> <a href="/recordVideo">Aufnahme</a>
+			Video: <input type="text" name="fileNameStartsWith" th:text="${searchVideoModel?.fileNameStartsWith}" /><br /> <input
+				type="submit" value="Submit" />
 		</form>
-		Ergebnisse:
+		<div th:if="${searchVideoModel} != null">Ergebnisse:
 		<ul id="searchResults"
 			th:each="result,iterationStatus : ${searchVideoModel.results}">
-			<li><a th:href="'/presentVideo?videoFile=' + ${result.fileName}"><p
-						th:text="${result.fileName}" /></a> <a
-				th:href="'/deleteVideo?videoFile=' + ${result.fileName}"><img
+			<li class="float: left"><a class="float: left"
+				th:href="'/presentVideo?videoFile=' + ${result.fileName}">
+					<p th:text="${result.fileName}" />
+			</a> <a class="float: right"
+				th:href="'/deleteVideo?videoFile=' + ${result.fileName}"> <img
 					src="files/png/icon_trash_alt.png"
-					th:alt="'Lösche ' + ${result.fileName}" /></a></li>
+					th:alt="'Lösche ' + ${result.fileName}" />
+			</a></li>
 		</ul>
+		</div>
 	</div>
 </body>
 </html>
