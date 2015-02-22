@@ -1,0 +1,69 @@
+package at.gov.parlament.documentation.hermes.test.integration;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+
+import at.gov.parlament.documentation.hermes.dao.FileLocator;
+import at.gov.parlament.documentation.hermes.dao.FileLocatorRepository;
+import at.gov.parlament.documentation.hermes.dao.PersistenceContext;
+import at.gov.parlament.documentation.hermes.dao.Todo;
+import at.gov.parlament.documentation.hermes.dao.VideoFile;
+import at.gov.parlament.documentation.hermes.dao.VideoFileRepository;
+
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { PersistenceContext.class })
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+		DirtiesContextTestExecutionListener.class,
+		TransactionalTestExecutionListener.class,
+		DbUnitTestExecutionListener.class })
+@DatabaseSetup("hermesIntegrationTestData.xml")
+public class VideoFileRepositoryIntegrationTest {
+
+	@Autowired
+	private VideoFileRepository repository;
+
+	@Test
+	public void findByName_NoVideoFileEntriesFound_ShouldReturnEmptyList() {
+		List<VideoFile> fileLocatorEntries = repository.findByName("not existing");
+		assertThat(fileLocatorEntries.size(), is(0));
+	}
+
+	@Test
+	public void findByName_OneVideoFileEntryFound_ShouldReturnAListOfOneEntry() {
+		List<VideoFile> fileLocatorEntries = repository.findByName("hermes");
+
+		assertThat(fileLocatorEntries.size(), is(1));
+		assertThat(
+				fileLocatorEntries.get(0),
+				allOf(hasProperty("id", is(1L)),
+						hasProperty("name", is("hermes")),
+						hasProperty("contentType", is("video/mp4"))));
+		assertThat(
+				fileLocatorEntries.get(0).getFileLocator(),
+				allOf(hasProperty("id", is(1L)),
+						hasProperty("link", is("/files/hermes.mp4")),
+						hasProperty("hashValue", is("hermesHashvalue"))));
+		
+	}
+
+}
