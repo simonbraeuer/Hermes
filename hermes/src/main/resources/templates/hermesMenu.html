@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<header th:fragment="headericon">
+		<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
+	</header>
+	<nav th:fragment="navmenu (activeMenuEntry,)">
+		<ul class="nav nav-tabs">
+			<li role="presentation" th:class="${activeMenuEntry = 'home'}? 'active' : ''"><a href="#home">Home</a></li>
+			<li role="presentation" th:class="${activeMenuEntry = 'search'}? 'active' : ''"><a href="#search">Suchen</a></li>
+			<li role="presentation" th:class="${activeMenuEntry = 'record'}? 'active' : ''"><a href="#record">Aufnehmen</a></li>
+		</ul>
+	</nav>
+</body>
+</html>

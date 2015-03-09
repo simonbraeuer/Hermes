@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "hermes_vaadin.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in hermes_vaadin.scss */
+.hermes_vaadin {
+  @include addons;
+  @include hermes_vaadin;
+}

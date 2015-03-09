@@ -9,20 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<header>
-		<img src="/resources/png/hermes_icon.png" alt="Logo Hermes" />
-	</header>
-	<nav>
-		<ul class="nav nav-tabs">
-			<li role="presentation" class="active"><a href="#">Home</a></li>
-			<li role="presentation"><a href="/searchVideo">Suchen</a></li>
-            <li role="presentation"><a href="/recordVideo">Aufnehmen</a></li>
-            <li role="presentation"><a href="/uploadVideo">Hochladen</a></li>
-		</ul>
-	</nav>
-	
-	<aside>
-	   Willkommen bei Hermes!
-	</aside>
+	<header th:include="hermesMenu :: headericon"/>
+	<nav th:include="hermesMenu :: navmenu (${sessionBean.activeModule})"/>
 </body>
 </html>
