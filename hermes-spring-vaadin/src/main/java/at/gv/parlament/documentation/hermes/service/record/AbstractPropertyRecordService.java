@@ -12,7 +12,9 @@ import at.gv.parlament.documentation.hermes.domain.RecordSetting;
 @Log4j
 public abstract class AbstractPropertyRecordService implements IRecordService {
 	
-	private RecordSetting currentRecordSetting;
+	protected RecordSetting currentRecordSetting;
+	
+	protected Process startProcess;
 	
 	@Autowired
 	protected Properties applicationProperties;

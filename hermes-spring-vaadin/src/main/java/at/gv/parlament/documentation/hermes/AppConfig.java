@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 
 import com.vaadin.spring.annotation.EnableVaadin;
 
+import at.gv.parlament.documentation.hermes.domain.RecordSource;
 import at.gv.parlament.documentation.hermes.service.ILoginService;
 import at.gv.parlament.documentation.hermes.service.LoginService;
 import at.gv.parlament.documentation.hermes.service.record.DebutRecordService;
 import at.gv.parlament.documentation.hermes.service.record.FfmpegRecordService;
 import at.gv.parlament.documentation.hermes.service.record.IMasterRecordService;
 import at.gv.parlament.documentation.hermes.service.record.MasterRecordService;
+import at.gv.parlament.documentation.hermes.service.record.RecordWebCamRecordService;
 
 @Configuration
 @EnableVaadin
@@ -23,6 +25,9 @@ public class AppConfig {
 	
 	@Autowired
 	FfmpegRecordService ffmpegRecordService;
+	
+	@Autowired
+	RecordWebCamRecordService recordWebCamRecordService;
 	
 	
 	@Bean
@@ -54,6 +59,7 @@ public class AppConfig {
 		MasterRecordService ret = new MasterRecordService();
 		ret.registerService(DebutRecordService.SOURCE, debutRecordService);
 		ret.registerService(FfmpegRecordService.SOURCE, ffmpegRecordService);
+		ret.registerService(RecordWebCamRecordService.SOURCE, recordWebCamRecordService);
 		return ret;
 	}
 
