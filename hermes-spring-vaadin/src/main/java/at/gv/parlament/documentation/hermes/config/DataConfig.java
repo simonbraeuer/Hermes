@@ -16,8 +16,8 @@ import com.mysql.jdbc.Driver;
 //@PropertySource("classpath:database.properties")
 //@Configuration
 public class DataConfig {
-	@Autowired
-	Environment env;
+//	@Autowired
+//	Environment env;
 
 	/*@Bean
 	public DataSource dataSource() {
