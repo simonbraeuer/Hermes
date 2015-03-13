@@ -70,6 +70,7 @@ public class MainView extends AbstractHermesApplicationView implements IMainView
 	@Override
 	public void setContentPage(IContentPage view) {
 		contentPanel.setContent(view);
+		view.onDisplayPage();
 	}
 
 	@Override

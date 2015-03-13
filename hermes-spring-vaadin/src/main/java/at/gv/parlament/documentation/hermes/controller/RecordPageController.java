@@ -1,10 +1,11 @@
 package at.gv.parlament.documentation.hermes.controller;
 
-import java.util.Set;
-
+import java.io.Serializable;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.VaadinUIScope;
 
 import at.gv.parlament.documentation.hermes.domain.RecordSetting;
 import at.gv.parlament.documentation.hermes.domain.RecordSource;
@@ -12,45 +13,56 @@ import at.gv.parlament.documentation.hermes.service.record.IMasterRecordService;
 import at.gv.parlament.documentation.hermes.view.IRecordPage;
 
 @SpringComponent
-public class RecordPageController implements IRecordPageController {
+@VaadinUIScope
+public class RecordPageController implements IRecordPageController, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2581971322827527679L;
 	private IRecordPage page;
 	private RecordSource selectedSource;
-	private String fileName;
 	
 	@Autowired
-	private IMasterRecordService masterRecordService;
+	transient private IMasterRecordService masterRecordService;
 	
 	@Override
 	public void selectRecordSource(RecordSource source) {
 		selectedSource = source;
+		if(source == null) {
+			selectedSource = masterRecordService.getDefaultSource();
+		}
+		refreshRecordPage();
 	}
 
 	@Override
-	public void recordAction(boolean record) {
-		if(selectedSource != null) {
-			if(record && !isRecording()) {
-				masterRecordService.startRecord(selectedSource, new RecordSetting(fileName));
-			}
+	public void recordAction(boolean record, RecordSetting setting) {
+		if(record && !isRecording()) {
+			masterRecordService.startRecord(selectedSource, setting);
 		}
-	}
-
-	private boolean isRecording() {
-		return masterRecordService.isRecording(selectedSource)!=null;
+		if(!record && isRecording()) {
+			masterRecordService.stopRecord(selectedSource);
+		}
+		refreshRecordPage();
 	}
 
 	@Override
 	public void setRecordPage(IRecordPage page) {
 		this.page = page;
+		page.setRecordSources(masterRecordService.getAllSources());
+		page.setDefaultSource(masterRecordService.getDefaultSource());
 	}
 
-	@Override
-	public Set<RecordSource> getRecordSources() {
-		return masterRecordService.getAllSources();
+	
+	// --------- private --------
+	
+	private void refreshRecordPage() {
+		RecordSetting currentSetting = masterRecordService.isRecording(selectedSource);
+		page.setRecordSetting(currentSetting, currentSetting != null);
+	}
+	
+	private boolean isRecording() {
+		return masterRecordService.isRecording(selectedSource)!=null;
 	}
 
-	@Override
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 
 }

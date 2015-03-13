@@ -10,8 +10,11 @@ import at.gv.parlament.documentation.hermes.domain.RecordSource;
 import at.gv.parlament.documentation.hermes.service.ILoginService;
 import at.gv.parlament.documentation.hermes.service.LoginService;
 import at.gv.parlament.documentation.hermes.service.record.DebutRecordService;
+import at.gv.parlament.documentation.hermes.service.record.DummyRecordService;
+import at.gv.parlament.documentation.hermes.service.record.DummyRecordService2;
 import at.gv.parlament.documentation.hermes.service.record.FfmpegRecordService;
 import at.gv.parlament.documentation.hermes.service.record.IMasterRecordService;
+import at.gv.parlament.documentation.hermes.service.record.IRecordService;
 import at.gv.parlament.documentation.hermes.service.record.MasterRecordService;
 import at.gv.parlament.documentation.hermes.service.record.RecordWebCamRecordService;
 
@@ -21,6 +24,9 @@ public class AppConfig {
 	LoginService loginService;
 	
 	@Autowired
+	DummyRecordService2 dummyRecordService2;
+	
+	@Autowired
 	DebutRecordService debutRecordService;
 	
 	@Autowired
@@ -28,6 +34,10 @@ public class AppConfig {
 	
 	@Autowired
 	RecordWebCamRecordService recordWebCamRecordService;
+	
+	@Autowired
+	DummyRecordService dummyRecordService;
+	
 	
 	
 	@Bean
@@ -57,9 +67,11 @@ public class AppConfig {
 	@Bean
 	public IMasterRecordService getMasterRecordService() {
 		MasterRecordService ret = new MasterRecordService();
-		ret.registerService(DebutRecordService.SOURCE, debutRecordService);
-		ret.registerService(FfmpegRecordService.SOURCE, ffmpegRecordService);
-		ret.registerService(RecordWebCamRecordService.SOURCE, recordWebCamRecordService);
+		//ret.registerService(DebutRecordService.SOURCE, debutRecordService);
+		//ret.registerService(FfmpegRecordService.SOURCE, ffmpegRecordService);
+		//ret.registerService(RecordWebCamRecordService.SOURCE, recordWebCamRecordService);
+		ret.registerService(DummyRecordService.SOURCE, dummyRecordService, true);
+		ret.registerService(DummyRecordService2.SOURCE, dummyRecordService2, false);
 		return ret;
 	}
 
