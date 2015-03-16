@@ -20,10 +20,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import at.gov.parlament.documentation.hermes.dao.FileLocator;
-import at.gov.parlament.documentation.hermes.dao.FileLocatorRepository;
 import at.gov.parlament.documentation.hermes.dao.PersistenceContext;
 import at.gov.parlament.documentation.hermes.dao.Todo;
+import at.gov.parlament.documentation.hermes.dao.FileLocator;
+import at.gov.parlament.documentation.hermes.dao.FileLocatorRepository;
 import at.gov.parlament.documentation.hermes.dao.VideoFile;
 import at.gov.parlament.documentation.hermes.dao.VideoFileRepository;
 

@@ -1,0 +1,6 @@
+<dataset>
+    <filelocator id="1" hashvalue="hermesHashvalue" filepath="/opt/files/hermes.mp4" link="/files/hermes.mp4" version="0"/>
+    <filelocator id="2" hashvalue="testHashvalue" filepath="/opt/files/test.mp4" link="/files/test.mp4" version="0"/>
+    <videofile id="1" name="hermes" contenttype="video/mp4" filelocatorid="1" version="0"/>
+    <videofile id="2" name="test" contenttype="video/mp4" filelocatorid="2" version="0"/>
+</dataset>

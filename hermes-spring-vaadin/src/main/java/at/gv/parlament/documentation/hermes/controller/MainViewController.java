@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import scala.annotation.meta.setter;
-
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinUIScope;
 import com.vaadin.spring.navigator.SpringViewProvider;
