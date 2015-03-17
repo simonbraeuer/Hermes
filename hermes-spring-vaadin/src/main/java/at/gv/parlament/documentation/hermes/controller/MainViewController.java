@@ -11,6 +11,7 @@ import com.vaadin.spring.navigator.SpringViewProvider;
 import at.gv.parlament.documentation.hermes.view.IMainView;
 import at.gv.parlament.documentation.hermes.view.IRecordPage;
 import at.gv.parlament.documentation.hermes.view.ISearchPage;
+import at.gv.parlament.documentation.hermes.view.IUploadVideoPage;
 
 @SpringComponent
 @VaadinUIScope
@@ -30,6 +31,9 @@ public class MainViewController implements IMainViewController, Serializable {
 	private ISearchPage searchPage;
 	
 	@Autowired
+	private IUploadVideoPage uploadVideoPage;
+	
+	@Autowired
     private SpringViewProvider viewProvider;
 
 	
@@ -41,14 +45,17 @@ public class MainViewController implements IMainViewController, Serializable {
 			mainView.setContentPage(recordPage);
 		} else if(action.equals(MenuAction.SEARCH)) {
 			mainView.setContentPage(searchPage);
+		} else if(action.equals(MenuAction.UPLOADVIDEO)) {
+			mainView.setContentPage(uploadVideoPage);
 		}
 	}
 
 	@Override
 	public void setMainView(IMainView view) {
 		mainView = view;
-		mainView.addMenuEntry("Beitraege", MenuAction.SEARCH);
+		mainView.addMenuEntry("Beiträge", MenuAction.SEARCH);
 		mainView.addMenuEntry("Aufnahmen", MenuAction.RECORD);
+		mainView.addMenuEntry("Aufnahme hochladen", MenuAction.UPLOADVIDEO);
 		mainView.addMenuEntry("Logout", MenuAction.LOGOUT);
 	}
 	

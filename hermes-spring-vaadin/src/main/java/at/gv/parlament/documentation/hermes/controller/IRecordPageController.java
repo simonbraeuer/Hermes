@@ -1,7 +1,5 @@
 package at.gv.parlament.documentation.hermes.controller;
 
-import java.util.List;
-
 import at.gv.parlament.documentation.hermes.domain.RecordSetting;
 import at.gv.parlament.documentation.hermes.domain.RecordSource;
 import at.gv.parlament.documentation.hermes.view.IRecordPage;
