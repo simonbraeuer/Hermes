@@ -18,7 +18,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import at.gv.parlament.documentation.hermes.dao.PersistenceContext;
-import at.gv.parlament.documentation.hermes.dao.VideoFile;
+import at.gv.parlament.documentation.hermes.dao.VideoFileEntity;
 import at.gv.parlament.documentation.hermes.dao.VideoFileRepository;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
@@ -38,13 +38,13 @@ public class VideoFileRepositoryIntegrationTest {
 
 	@Test
 	public void findByName_NoVideoFileEntriesFound_ShouldReturnEmptyList() {
-		List<VideoFile> fileLocatorEntries = repository.findByName("not existing");
+		List<VideoFileEntity> fileLocatorEntries = repository.findByName("not existing");
 		assertThat(fileLocatorEntries.size(), is(0));
 	}
 
 	@Test
 	public void findByName_OneVideoFileEntryFound_ShouldReturnAListOfOneEntry() {
-		List<VideoFile> fileLocatorEntries = repository.findByName("hermes");
+		List<VideoFileEntity> fileLocatorEntries = repository.findByName("hermes");
 
 		assertThat(fileLocatorEntries.size(), is(1));
 		assertThat(
@@ -52,11 +52,6 @@ public class VideoFileRepositoryIntegrationTest {
 				allOf(hasProperty("id", is(1L)),
 						hasProperty("name", is("hermes")),
 						hasProperty("contentType", is("video/mp4"))));
-		assertThat(
-				fileLocatorEntries.get(0).getFileLocator(),
-				allOf(hasProperty("id", is(1L)),
-						hasProperty("link", is("/files/hermes.mp4")),
-						hasProperty("hashValue", is("hermesHashvalue"))));
 		
 	}
 

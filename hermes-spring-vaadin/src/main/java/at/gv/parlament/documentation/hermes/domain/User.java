@@ -8,4 +8,5 @@ import lombok.Data;
 public class User implements Serializable{
 	private String name;
 	private String email;
+	private Boolean isAdmin;
 }

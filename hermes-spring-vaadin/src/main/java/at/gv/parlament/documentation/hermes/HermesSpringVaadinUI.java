@@ -4,6 +4,9 @@ import javax.servlet.annotation.WebServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import at.gv.parlament.documentation.hermes.view.login.LoginView;
+import at.gv.parlament.documentation.hermes.view.main.MainView;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -44,5 +47,6 @@ public class HermesSpringVaadinUI extends UI {
 
         Navigator navigator = new Navigator(this, viewContainer);
         navigator.addProvider(viewProvider);
+        navigator.setErrorView(viewProvider.getView(MainView.NAME));
     }
 }

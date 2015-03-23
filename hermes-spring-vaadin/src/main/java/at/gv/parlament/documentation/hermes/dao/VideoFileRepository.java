@@ -4,6 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface VideoFileRepository extends CrudRepository<VideoFile, Long> {
-	List<VideoFile> findByName(String name);
+public interface VideoFileRepository extends CrudRepository<VideoFileEntity, Long> {
+	List<VideoFileEntity> findByName(String name);
 }

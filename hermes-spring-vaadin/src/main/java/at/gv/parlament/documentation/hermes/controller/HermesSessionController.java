@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import at.gv.parlament.documentation.hermes.domain.LoginCredentials;
-import at.gv.parlament.documentation.hermes.service.ILoginService;
+import at.gv.parlament.documentation.hermes.service.login.ILoginService;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinUIScope;

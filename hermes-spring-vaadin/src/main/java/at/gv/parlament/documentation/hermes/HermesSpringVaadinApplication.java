@@ -3,7 +3,7 @@ package at.gv.parlament.documentation.hermes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import at.gv.parlament.documentation.hermes.service.ILoginService;
+import at.gv.parlament.documentation.hermes.service.login.ILoginService;
 
 @SpringBootApplication
 public class HermesSpringVaadinApplication {

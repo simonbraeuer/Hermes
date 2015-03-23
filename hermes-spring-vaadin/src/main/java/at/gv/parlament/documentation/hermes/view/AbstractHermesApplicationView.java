@@ -1,6 +1,9 @@
 package at.gv.parlament.documentation.hermes.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import at.gv.parlament.documentation.hermes.controller.HermesSessionController;
+import at.gv.parlament.documentation.hermes.view.login.LoginView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -11,10 +14,14 @@ public abstract class AbstractHermesApplicationView extends CustomComponent
 	
 	protected static final String SESSIONCONTROLLER = "SESSIONCONTROLLER";
 	
+	@Autowired
+	private HermesSessionController sessionController;
+	
 	protected HermesSessionController getSessionController() {
 		if(getSession() == null) {
 			return null;
 		}
+		
 		return (HermesSessionController) getSession().getAttribute(SESSIONCONTROLLER);
 	}
 	
@@ -32,7 +39,9 @@ public abstract class AbstractHermesApplicationView extends CustomComponent
 	}
 	
 	public void logoutSessionAndNavigateToLoginView() {
-		getSessionController().logout();
+		if(getSessionController()!=null) {
+			getSessionController().logout();
+		}
 		getUI().getNavigator().navigateTo(LoginView.NAME);
 	}
 }

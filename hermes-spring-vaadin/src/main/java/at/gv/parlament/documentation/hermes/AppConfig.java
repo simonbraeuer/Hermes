@@ -1,15 +1,18 @@
 package at.gv.parlament.documentation.hermes;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.vaadin.spring.annotation.EnableVaadin;
 
 import at.gv.parlament.documentation.hermes.domain.RecordSource;
-import at.gv.parlament.documentation.hermes.service.ILoginService;
-import at.gv.parlament.documentation.hermes.service.LoginService;
+import at.gv.parlament.documentation.hermes.service.login.ILoginService;
+import at.gv.parlament.documentation.hermes.service.login.LoginService;
 import at.gv.parlament.documentation.hermes.service.record.DebutRecordService;
 import at.gv.parlament.documentation.hermes.service.record.DummyRecordService;
 import at.gv.parlament.documentation.hermes.service.record.DummyRecordService2;
@@ -40,31 +43,18 @@ public class AppConfig {
 	@Autowired
 	DummyRecordService dummyRecordService;
 	
+	@Autowired
+	Environment environment;
 	
-	
-	@Bean
-	public ILoginService loginService() {
-		if(loginService == null) {
-			loginService = new LoginService();
-		}
-		return loginService;
+	@Bean(name="appDataPath")
+	public String appDataPath() {
+		return environment.getProperty("appdata.path", "/opt/files");
 	}
 	
-//	@Bean
-//	public IMainViewController getMainViewController() {
-//		return new MainViewController();
-//	}
-//	
-//	@Bean
-//	public IMainView getMainView() {
-//		return new MainView();
-//	}
-//	
-//	
-//	@Bean
-//	public LoginView getLoginView() {
-//		return new LoginView();
-//	}
+	@Bean(name="appDataPathTmp")
+	public String appDataPathTmp() {
+		return environment.getProperty("appdata.path", appDataPath()+File.separator+"tmp");
+	}
 	
 	@Bean
 	public IMasterRecordService getMasterRecordService() {
